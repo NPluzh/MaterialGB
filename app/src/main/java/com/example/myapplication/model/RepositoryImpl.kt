@@ -15,7 +15,7 @@ class RepositoryImpl:Repository {
             .build()
     }
 
-    private fun getPictureOfTheDayApi():PictureOfTheDayAPI{
+    fun getPictureOfTheDayApi():PictureOfTheDayAPI{
      return retrofit.create(PictureOfTheDayAPI::class.java)
     }
 }
