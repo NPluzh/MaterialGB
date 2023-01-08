@@ -38,6 +38,7 @@ class PictureOfTheDayFragment : Fragment() {
         { appState ->
             renderData(appState)
         }
+        viewModel.sentRequest()
 
 
     }
