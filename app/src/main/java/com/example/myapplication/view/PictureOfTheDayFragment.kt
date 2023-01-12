@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
@@ -39,7 +40,15 @@ class PictureOfTheDayFragment : Fragment() {
             renderData(appState)
         }
         viewModel.sentRequest()
-
+        binding.chipToday.setOnClickListener {
+            Toast.makeText(requireActivity(),"chipToday", Toast.LENGTH_SHORT).show()
+        }
+        binding.chipYesterday.setOnClickListener {
+            Toast.makeText(requireActivity(),"chipYesterday", Toast.LENGTH_SHORT).show()
+        }
+        binding.chipPozavchera.setOnClickListener {
+            Toast.makeText(requireActivity(),"chipPozavchera", Toast.LENGTH_SHORT).show()
+        }
 
     }
 
