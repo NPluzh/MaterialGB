@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">My App</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -7,4 +7,7 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="photo_of_the_day_stub">photo_of_the_day_stub</string>
+    <string name="hint">подсказка</string>
+
+
 </resources>
