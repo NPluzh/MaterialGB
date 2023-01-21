@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-class RepositoryImpl:Repository {
+class RepositoryImpl : Repository {
     private val baseUrl = "https://api.nasa.gov/"
 
     private val retrofit by lazy {
@@ -15,7 +15,7 @@ class RepositoryImpl:Repository {
             .build()
     }
 
-    fun getPictureOfTheDayApi():PictureOfTheDayAPI{
-     return retrofit.create(PictureOfTheDayAPI::class.java)
+    fun getPictureOfTheDayApi(): PictureOfTheDayAPI {
+        return retrofit.create(PictureOfTheDayAPI::class.java)
     }
 }
