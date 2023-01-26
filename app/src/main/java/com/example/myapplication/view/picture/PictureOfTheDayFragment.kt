@@ -1,19 +1,18 @@
-package com.example.myapplication.view
+package com.example.myapplication.view.picture
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import coil.load
+import com.example.myapplication.MainActivity
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentPictureBinding
+import com.example.myapplication.view.drawer.BottomNavigationDrawerFragment
+import com.example.myapplication.view.settings.SettingsFragment
 import com.example.myapplication.viewmodel.AppState
 import com.example.myapplication.viewmodel.PictureOfTheDayViewModel
 
@@ -38,17 +37,18 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.getLiveData().observe(viewLifecycleOwner) { appState ->
             renderData(appState)
         }
         viewModel.sendRequest()
 
         binding.chipToday.setOnClickListener {
-            Toast.makeText(requireContext(),"chipToday",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "chipToday", Toast.LENGTH_SHORT).show()
         }
         binding.chipYesterday.isEnabled = false
         binding.chipYesterday.setOnClickListener {
-            Toast.makeText(requireContext(),"chipYesterday",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "chipYesterday", Toast.LENGTH_SHORT).show()
         }
 
         binding.inputLayout.setEndIconOnClickListener {
@@ -56,7 +56,33 @@ class PictureOfTheDayFragment : Fragment() {
                 data = Uri.parse("https://en.wikipedia.org/wiki/${binding.input.text.toString()}")
             })
         }
+
+
+        (requireActivity() as MainActivity).setSupportActionBar(binding.bottomAppBar)
+        setHasOptionsMenu(true)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_favorite -> {}
+            R.id.action_settings -> {
+                requireActivity().supportFragmentManager.beginTransaction().hide(this)
+                    .add(R.id.container, SettingsFragment.newInstance()).addToBackStack("").commit()
+            }
+            android.R.id.home -> {
+                activity?.let {
+                    BottomNavigationDrawerFragment().show(it.supportFragmentManager, "tag")
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
     private fun renderData(appState: AppState) {
         when (appState) {
