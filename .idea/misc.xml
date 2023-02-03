@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_Projects/GB/Material/MaterialLesctureReview/app/src/main/res/drawable/bg_earth.xml" value="0.1" />
         <entry key="..\:/Android_Projects/GB/Material/MaterialLesctureReview/app/src/main/res/drawable/ic_favourite_menu.xml" value="0.1" />
         <entry key="..\:/Android_Projects/GB/Material/MaterialLesctureReview/app/src/main/res/drawable/ic_send.xml" value="0.1875" />
         <entry key="..\:/Android_Projects/GB/Material/MaterialLesctureReview/app/src/main/res/font/aladin.xml" value="0.20833333333333334" />
         <entry key="..\:/Android_Projects/GB/Material/MaterialLesctureReview/app/src/main/res/font/roboto.xml" value="0.12777777777777777" />
         <entry key="..\:/Android_Projects/GB/Material/MaterialLesctureReview/app/src/main/res/layout/activity_main.xml" value="0.3541666666666667" />
+        <entry key="..\:/Android_Projects/GB/Material/MaterialLesctureReview/app/src/main/res/layout/activity_view_pager.xml" value="0.17760416666666667" />
         <entry key="..\:/Android_Projects/GB/Material/MaterialLesctureReview/app/src/main/res/layout/bottom_navigation_layout.xml" value="0.3541666666666667" />
         <entry key="..\:/Android_Projects/GB/Material/MaterialLesctureReview/app/src/main/res/layout/fragment_picture.xml" value="0.3541666666666667" />
         <entry key="..\:/Android_Projects/GB/Material/MaterialLesctureReview/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.3541666666666667" />
