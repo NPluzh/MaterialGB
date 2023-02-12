@@ -7,7 +7,7 @@ import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.myapplication.R
 
-class MyBehavior(context: Context, attrs: AttributeSet?=null): CoordinatorLayout.Behavior<View>(context,attrs)  {
+class ButtonBehavior(context: Context, attrs: AttributeSet?=null): CoordinatorLayout.Behavior<View>(context,attrs)  {
 
     override fun layoutDependsOn(
         parent: CoordinatorLayout,
