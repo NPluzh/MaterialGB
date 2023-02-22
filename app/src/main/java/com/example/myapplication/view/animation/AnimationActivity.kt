@@ -1,43 +1,43 @@
 package com.example.myapplication.view.animation
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ObjectAnimator
-import android.graphics.Rect
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.view.animation.AnticipateOvershootInterpolator
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.recyclerview.widget.RecyclerView
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.*
 import com.example.myapplication.R
-import com.example.myapplication.databinding.ActivityAnimationBinding
+import com.example.myapplication.databinding.ActivityAnimationStartBinding
 
 
 class AnimationActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAnimationBinding
+    private lateinit var binding: ActivityAnimationStartBinding
 
     var isFlag = false
     var duration = 1000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
-        binding = ActivityAnimationBinding.inflate(layoutInflater)
+        binding = ActivityAnimationStartBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val constraintSetStart = ConstraintSet()
+        val constraintSetEnd = ConstraintSet()
+        //constraintSetStart.clone(binding.constraintContainer)
+        constraintSetStart.clone(this,R.layout.activity_animation_start)
+        constraintSetEnd.clone(this,R.layout.activity_animation_end)
 
-        binding.scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            binding.header.isSelected = binding.scrollView.canScrollVertically(-1)
+        binding.tap.setOnClickListener {
+            isFlag = !isFlag
+
+            val changeBounds = ChangeBounds()
+            changeBounds.duration = 1000L
+            changeBounds.interpolator = AnticipateOvershootInterpolator(5.0f)
+            TransitionManager.beginDelayedTransition(binding.constraintContainer,changeBounds)
+            if(isFlag){
+                constraintSetEnd.applyTo(binding.constraintContainer)
+            }else{
+                constraintSetStart.applyTo(binding.constraintContainer)
+            }
         }
     }
 
