@@ -3,6 +3,7 @@ package com.example.myapplication.view.recycler
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.myapplication.databinding.ActivityRecyclerBinding
 
 class RecyclerActivity : AppCompatActivity() {
@@ -28,14 +29,7 @@ class RecyclerActivity : AppCompatActivity() {
         adapter = RecyclerAdapter(data, callbackAdd, callbackRemove)
         binding.recyclerView.adapter = adapter
 
-        val lat = 10
-        val lon = 10
-        val location = lat to lon
-        location.first
-        location.second
-        val location2 = Pair(lat, lon)
-
-
+        ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(binding.recyclerView)
     }
 
     private val callbackAdd = AddItem {
