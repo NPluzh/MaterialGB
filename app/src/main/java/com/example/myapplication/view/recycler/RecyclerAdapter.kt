@@ -8,9 +8,19 @@ import com.example.myapplication.databinding.ActivityRecyclerItemEarthBinding
 import com.example.myapplication.databinding.ActivityRecyclerItemHeaderBinding
 import com.example.myapplication.databinding.ActivityRecyclerItemMarsBinding
 
-class RecyclerAdapter(private val listData: List<Data>) :
+class RecyclerAdapter(private var listData: List<Data>,val callbackAdd: AddItem,val callbackRemove: RemoveItem) :
     RecyclerView.Adapter<RecyclerAdapter.BaseViewHolder>() {
 
+
+    fun setListDataRemove(listDataNew: List<Data>,position: Int){
+        listData = listDataNew
+        notifyItemRemoved(position)
+    }
+
+    fun setListDataAdd(listDataNew: List<Data>,position: Int){
+        listData = listDataNew
+        notifyItemInserted(position)
+    }
 
     override fun getItemViewType(position: Int): Int {
         return listData[position].type
@@ -44,12 +54,27 @@ class RecyclerAdapter(private val listData: List<Data>) :
         return listData.size
     }
 
-    class HeaderViewHolder(val binding: ActivityRecyclerItemHeaderBinding) :
+
+
+
+
+    inner class MarsViewHolder(val binding: ActivityRecyclerItemMarsBinding) :
         BaseViewHolder(binding.root) {
         override fun bind(data: Data) {
             binding.name.text = data.name
+            binding.addItemImageView.setOnClickListener {
+                callbackAdd.add(layoutPosition)
+            }
+            binding.removeItemImageView.setOnClickListener {
+                callbackRemove.remove(layoutPosition)
+            }
+
         }
     }
+
+
+
+
 
     class EarthViewHolder(val binding: ActivityRecyclerItemEarthBinding) :
         BaseViewHolder(binding.root) {
@@ -58,7 +83,7 @@ class RecyclerAdapter(private val listData: List<Data>) :
         }
     }
 
-    class MarsViewHolder(val binding: ActivityRecyclerItemMarsBinding) :
+    class HeaderViewHolder(val binding: ActivityRecyclerItemHeaderBinding) :
         BaseViewHolder(binding.root) {
         override fun bind(data: Data) {
             binding.name.text = data.name
