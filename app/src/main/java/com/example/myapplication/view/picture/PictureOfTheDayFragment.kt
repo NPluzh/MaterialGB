@@ -1,8 +1,13 @@
 package com.example.myapplication.view.picture
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.Html
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
@@ -92,6 +97,11 @@ class PictureOfTheDayFragment : Fragment() {
                 binding.imageView.load(appState.pictureOfTheDayResponseData.url) {
                     //TODO HW настроить загрузку изображения: error() placeholder()
                 }
+
+
+                binding.textView.text = appState.pictureOfTheDayResponseData.explanation
+                binding.textView.typeface = Typeface.createFromAsset(requireActivity().assets,"folder1/folder3/az_Eret1.ttf")
+
             }
         }
     }
