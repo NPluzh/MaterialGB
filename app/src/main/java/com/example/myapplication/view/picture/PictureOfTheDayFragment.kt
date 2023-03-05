@@ -1,11 +1,26 @@
 package com.example.myapplication.view.picture
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.*
+import android.text.style.BulletSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.ImageSpan
+import android.text.style.TypefaceSpan
+import android.util.Log
 import android.view.*
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.provider.FontRequest
+import androidx.core.provider.FontsContractCompat
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.myapplication.MainActivity
@@ -57,8 +72,7 @@ class PictureOfTheDayFragment : Fragment() {
             })
         }
 
-
-            }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -82,6 +96,7 @@ class PictureOfTheDayFragment : Fragment() {
     }
 
 
+    @SuppressLint("NewApi") // TODO HW не потерять пользователя 24-27 sdk версии
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Error -> {/*TODO HW*/
@@ -92,9 +107,94 @@ class PictureOfTheDayFragment : Fragment() {
                 binding.imageView.load(appState.pictureOfTheDayResponseData.url) {
                     //TODO HW настроить загрузку изображения: error() placeholder()
                 }
+
+
+                binding.textView.text = appState.pictureOfTheDayResponseData.explanation
+                binding.textView.typeface = Typeface.createFromAsset(requireActivity().assets,"folder1/folder3/az_Eret1.ttf")
+
+                val spanned:Spanned
+                val spannableString:SpannableString
+                var spannableStringBuilder:SpannableStringBuilder
+
+
+                val text = "My text \nbullet one \nbulleterter two\nbullet wetwwefrtweteone \nbullet wetwettwo\nbullet wetwetwone \nbullet two"
+                spannableStringBuilder = SpannableStringBuilder(text)
+                binding.textView.setText(spannableStringBuilder,TextView.BufferType.EDITABLE)
+                spannableStringBuilder = binding.textView.text as SpannableStringBuilder
+
+
+                val result = text.indexesOf("\n")
+
+                var current = result.first()
+                result.forEach {
+                    if(current!=it){
+                        spannableStringBuilder.setSpan(BulletSpan(20,ContextCompat.getColor(requireContext(),R.color.my_color),20),
+                            current+1,it,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
+                    current = it
+                }
+                spannableStringBuilder.setSpan(BulletSpan(20,ContextCompat.getColor(requireContext(),R.color.my_color),20),
+                    current+1,text.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                Log.d("@@@",result.toString())
+
+
+                for (i in text.indices){
+                    if(text[i]=='t'){
+                        spannableStringBuilder.setSpan(
+                            ForegroundColorSpan(ContextCompat.getColor(requireContext(),R.color.my_color)),
+                            i,i+1,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
+                }
+
+                for (i in text.indices){
+                    if(text[i]=='t'){
+                        spannableStringBuilder.setSpan(
+                            ForegroundColorSpan(ContextCompat.getColor(requireContext(),R.color.my_color)),
+                            i,i+1,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
+                }
+
+                val bitmap = ContextCompat.getDrawable(requireContext(), R.drawable.ic_earth)!!.toBitmap()
+                for (i in text.indices){
+                    if(text[i]=='o'){
+                        spannableStringBuilder.setSpan(
+                            ImageSpan(requireContext(),bitmap),
+                            i,i+1,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    }
+                }
+
+                spannableStringBuilder.insert(3,"word")
+                //spannableStringBuilder.replace(3,4,"word")
+
+
+
+                val request = FontRequest("com.google.android.gms.fonts","com.google.android.gms","Aladin",
+                    R.array.com_google_android_gms_fonts_certs)
+
+                val callback = object : FontsContractCompat.FontRequestCallback(){
+                    override fun onTypefaceRetrieved(typeface: Typeface?) {
+                        typeface?.let{
+                            spannableStringBuilder.setSpan(
+                                TypefaceSpan(it),
+                                0,spannableStringBuilder.length,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        }
+
+                        super.onTypefaceRetrieved(typeface)
+                    }
+                }
+
+                FontsContractCompat.requestFont(requireContext(),request,callback, Handler(Looper.getMainLooper()))
+
+
             }
         }
     }
+
+    fun String.indexesOf(substr: String, ignoreCase: Boolean = true): List<Int> =
+        (if (ignoreCase) Regex(substr, RegexOption.IGNORE_CASE) else Regex(substr))
+            .findAll(this).map { it.range.first }.toList()
+
 
     companion object {
         fun newInstance() = PictureOfTheDayFragment()
