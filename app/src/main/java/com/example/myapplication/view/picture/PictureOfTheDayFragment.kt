@@ -100,7 +100,19 @@ class PictureOfTheDayFragment : Fragment() {
 
 
                 binding.textView.text = appState.pictureOfTheDayResponseData.explanation
-                binding.textView.typeface = Typeface.createFromAsset(requireActivity().assets,"folder1/folder3/az_Eret1.ttf")
+                binding.textView.typeface = Typeface.createFromAsset(requireActivity().assets,"smbfolder/az_Eret1.ttf")
+
+                val spanned:Spanned
+                val spannableString:SpannableString
+                val spannableStringBuilder:SpannableStringBuilder
+
+                val text = "My text <ul><li>bullet one</li><li>bullet two</li></ul>"
+
+
+                binding.textView.text = text
+                binding.textView.text = Html.fromHtml(text)
+
+
 
             }
         }
