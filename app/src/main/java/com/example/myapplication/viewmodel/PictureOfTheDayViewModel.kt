@@ -10,8 +10,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.IllegalStateException
 
-class   PictureOfTheDayViewModel(private val liveData: MutableLiveData<AppState> = MutableLiveData(),
-                                 private val repositoryImpl: RepositoryImpl = RepositoryImpl()) :
+class PictureOfTheDayViewModel(private val liveData: MutableLiveData<AppState> = MutableLiveData(),
+                               private val repositoryImpl: RepositoryImpl = RepositoryImpl()) :
     ViewModel() {
     fun getLiveData():MutableLiveData<AppState>{
         //
@@ -33,7 +33,7 @@ class   PictureOfTheDayViewModel(private val liveData: MutableLiveData<AppState>
             if(response.isSuccessful){
                 liveData.postValue(AppState.Success(response.body()!!))
             }else{
-                liveData.postValue(AppState.Error(throw IllegalStateException("что-то пошло не так")))
+                liveData.postValue(AppState.Error( IllegalStateException("что-то пошло не так")))
             }
         }
 
