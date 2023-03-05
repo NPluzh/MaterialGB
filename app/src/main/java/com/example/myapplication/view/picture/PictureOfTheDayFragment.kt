@@ -11,6 +11,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -108,11 +109,15 @@ class PictureOfTheDayFragment : Fragment() {
 
                 val spanned:Spanned
                 val spannableString:SpannableString
-                val spannableStringBuilder:SpannableStringBuilder
+                var spannableStringBuilder:SpannableStringBuilder
 
 
                 val text = "My text \nbullet one \nbulleterter two\nbullet wetwwefrtweteone \nbullet wetwettwo\nbullet wetwetwone \nbullet two"
                 spannableStringBuilder = SpannableStringBuilder(text)
+                binding.textView.setText(spannableStringBuilder, TextView.BufferType.EDITABLE)
+                spannableStringBuilder = binding.textView.text as SpannableStringBuilder
+
+
                 val result = text.indexesOf("\n")
 
                 var current = result.first()
@@ -157,7 +162,7 @@ class PictureOfTheDayFragment : Fragment() {
                 spannableStringBuilder.insert(3,"word")
                 //spannableStringBuilder.replace(3,4,"word")
 
-                binding.textView.text = spannableStringBuilder
+
 
 
 
